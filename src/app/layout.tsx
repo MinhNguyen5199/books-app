@@ -1,50 +1,27 @@
-// app/layout.tsx
-import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import ThemeToggle from "./components/ThemeToggle";
-import ThemeProvider from "./components/ThemeProvider";
+// src/app/layout.tsx
+import type { Metadata } from "next";
+import { Inter } from "next/font/google"; // Using Next.js font optimization
+import "./globals.css"; // Global styles and Tailwind
+import { ThemeProvider } from "./components/ThemeProvider"; // Custom ThemeProvider component
 
-export const metadata = {
-  title: "BookSummary AI SaaS",
-  description: "AI-powered book summary and review platform",
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "BookWise AI - Knowledge Unleashed",
+  description: "AI-Powered Book Summaries & Reviews for Accelerated Learning. Basic, Pro, and VIP Tiers.",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en">
-      <head>
-        {/* Inject dark mode script BEFORE render */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function () {
-                try {
-                  const theme = localStorage.getItem('theme');
-                  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  if (theme === 'dark' || (!theme && prefersDark) || (theme === 'system' && prefersDark)) {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
-                } catch (_) {}
-              })();
-            `,
-          }}
-        />
-      </head>
-      <body className="min-h-screen flex flex-col bg-white text-gray-900 transition-colors">
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        {/* ThemeProvider manages dark mode state and applies 'dark' class */}
         <ThemeProvider>
-          <Header />
-          <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <ThemeToggle />
-            {children}
-          </main>
-          <Footer />
+          {children}
         </ThemeProvider>
       </body>
     </html>

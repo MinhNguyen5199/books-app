@@ -1,12 +1,40 @@
-@import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
+/* src/styles/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-html, body {
+@import "tailwindcss"; /* Simplified Tailwind import */
+@custom-variant dark (&:where(.dark, .dark *));
+/* Apply Inter font globally and smooth scrolling */
+html {
   font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
 }
 
-@layer components {
-  .btn-blue {
-    @apply inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition;
-  }
+/* Custom background pattern for hero section - designed to blend with dark mode */
+.bg-pattern-dots {
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.dark .bg-pattern-dots {
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Custom scrollbar for a sleek dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0F172A; /* Direct hex value for gray-900 from tailwind.config.ts */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4F46E5; /* Direct hex value for indigo-600 from tailwind.config.ts */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6366F1; /* Direct hex value for indigo-500 from tailwind.config.ts */
 }
