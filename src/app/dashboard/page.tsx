@@ -2,7 +2,8 @@
 'use client';
 
 import React from 'react';
-import { LineChart, BarChart, BookOpen, Clock, Zap, DollarSign, TrendingUp, ArrowRight, FileText, Link, Gamepad } from 'lucide-react';
+import Link from 'next/link'; // Import Link for upgrade button
+import { LineChart, BarChart, BookOpen, Clock, Zap, DollarSign, TrendingUp, ArrowRight, FileText, Gamepad } from 'lucide-react';
 
 const DashboardHomePage = () => {
   // Dummy data for dashboard - replace with actual user data
@@ -62,6 +63,17 @@ const DashboardHomePage = () => {
           <p className="text-4xl font-bold text-gray-900 dark:text-gray-50 capitalize">{userStats.currentTier}</p>
         </div>
       </div>
+
+      {/* --- Ad Placement: Below Stats Cards --- */}
+      <div className="my-8 p-4 bg-blue-100 dark:bg-blue-900 border border-blue-300 dark:border-blue-700 rounded-xl text-center shadow-inner animate-fade-in-up [animation-delay:0.4s]">
+        <p className="text-blue-800 dark:text-blue-200 font-semibold text-lg">
+          [Ad Placeholder: Discover new learning tools!]
+        </p>
+        <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline text-sm">
+          Learn More
+        </a>
+      </div>
+      {/* --- End Ad Placement --- */}
 
       {/* Call to Action / Upgrade Section */}
       {userStats.currentTier === 'Pro' && (

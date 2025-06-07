@@ -1,7 +1,6 @@
-/* src/styles/globals.css */
+@config "../../tailwind.config.ts"; /* Only if your config is NOT in the default location or you want to be explicit */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
-@import "tailwindcss"; /* Simplified Tailwind import */
+@import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 /* Apply Inter font globally and smooth scrolling */
 html {

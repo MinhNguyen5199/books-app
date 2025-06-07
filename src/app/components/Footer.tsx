@@ -5,8 +5,11 @@ import { Book, Twitter, Github, Linkedin } from 'lucide-react'; // Added social 
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 dark:bg-gray-900 py-12 rounded-t-3xl px-4 sm:px-6 lg:px-8 shadow-inner dark:shadow-none transition-colors duration-300 mt-16 border-t-2 border-indigo-100 dark:border-gray-800 w-full">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+    <footer className="bg-gray-100 dark:bg-gray-900 py-8 rounded-t-3xl px-4 sm:px-6 lg:px-8 shadow-inner dark:shadow-none transition-colors duration-300 border-t-2 border-indigo-100 dark:border-gray-800 w-full">
+      {/* --- MODIFICATION START --- */}
+      {/* Add max-w-7xl mx-auto to align content with Header */}
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+      {/* --- MODIFICATION END --- */}
         {/* Branding & Copyright */}
         <div className="flex flex-col items-center md:items-start mb-6 md:mb-0">
           <Link href="/" className="flex items-center space-x-2 mb-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-md">
@@ -24,7 +27,7 @@ const Footer = () => {
         </div>
 
         {/* Navigation Links */}
-        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-12 mb-6 md:mb-0">
+        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-50 mb-6 md:mb-0">
           <div className="flex flex-col space-y-2">
             <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-1">Company</h4>
             <Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 text-sm">
@@ -69,7 +72,9 @@ const Footer = () => {
             </a>
           </div>
         </div>
+      {/* --- MODIFICATION START --- */}
       </div>
+      {/* --- MODIFICATION END --- */}
     </footer>
   );
 };

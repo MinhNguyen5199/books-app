@@ -55,12 +55,14 @@ const HomePage = () => {
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob [animation-delay:-2s] dark:bg-indigo-600"></div> {/* Using array notation for animation-delay */}
 
           <div className="relative z-10">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6 animate-fade-in-up">
+            {/* --- UI/UX Enhancement: Apply new heading font --- */}
+            <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6 animate-fade-in-up">
               Unlock the World's Knowledge. <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-200 to-sky-400">
                 Powered by AI.
               </span>
             </h2>
+            {/* --- End UI/UX Enhancement --- */}
             <p className="text-xl text-indigo-100 dark:text-gray-300 max-w-3xl mx-auto mb-10 animate-fade-in-up [animation-delay:0.2s]"> {/* Using array notation for animation-delay */}
               Transform complex books into actionable insights with our cutting-edge AI summarization and review platform.
             </p>
@@ -109,6 +111,7 @@ const HomePage = () => {
                 className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group border border-gray-200 dark:border-gray-700 animate-fade-in-up"
                 style={{ animationDelay: `${0.1 * index + 0.8}s` }} /* Staggered animation */
               >
+                {/* --- UI/UX Enhancement: Use actual images if available, or enhance placeholder handling --- */}
                 <img
                   src={book.cover}
                   alt={book.title}
@@ -116,9 +119,11 @@ const HomePage = () => {
                   onError={(e) => { 
                     const target = e.target as HTMLImageElement; 
                     target.onerror = null; 
-                    target.src = `https://placehold.co/150x225/333333/F5F5F5?text=Cover`; 
+                    // Fallback to a more visually appealing placeholder, or a generic book icon
+                    target.src = `https://via.placeholder.com/150x225?text=Book+Cover`; 
                   }}
                 />
+                {/* --- End UI/UX Enhancement --- */}
                 <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200">
                   {book.title}
                 </h4>

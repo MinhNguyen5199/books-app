@@ -72,52 +72,65 @@ const ChallengeGame = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {challenges.map((challenge, index) => (
-          <div
-            key={challenge.id}
-            id={`challenge-${challenge.id}`}
-            className={`relative bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md border-2 transition-all duration-300 transform hover:-translate-y-1 group
-              ${challenge.completed
-                ? 'border-emerald-500 dark:border-emerald-400 bg-emerald-50 dark:bg-gray-700'
-                : 'border-gray-200 dark:border-gray-700 hover:shadow-xl'
-              } animate-fade-in-up`}
-            style={{ animationDelay: `${0.1 * index + 0.3}s` }}
-          >
-            {challenge.completed && (
-              <div className="absolute top-0 right-0 -mt-3 -mr-3 flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500 text-white shadow-lg animate-float-bounce">
-                <CheckCircle className="w-6 h-6" />
+          <React.Fragment key={challenge.id}>
+            <div
+              id={`challenge-${challenge.id}`}
+              className={`relative bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md border-2 transition-all duration-300 transform hover:-translate-y-1 group
+                ${challenge.completed
+                  ? 'border-emerald-500 dark:border-emerald-400 bg-emerald-50 dark:bg-gray-700'
+                  : 'border-gray-200 dark:border-gray-700 hover:shadow-xl'
+                } animate-fade-in-up`}
+              style={{ animationDelay: `${0.1 * index + 0.3}s` }}
+            >
+              {challenge.completed && (
+                <div className="absolute top-0 right-0 -mt-3 -mr-3 flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500 text-white shadow-lg animate-float-bounce">
+                  <CheckCircle className="w-6 h-6" />
+                </div>
+              )}
+              <div className="flex items-center space-x-3 mb-4">
+                <Dices className="w-8 h-8 text-purple-600 dark:text-purple-400" />
+                <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+                  {challenge.name}
+                </h3>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                {challenge.description}
+              </p>
+              <div className="flex justify-between items-center">
+                <span className="flex items-center text-amber-500 dark:text-amber-400 font-bold">
+                  <Gift className="w-4 h-4 mr-1" /> {challenge.points} Points
+                </span>
+                <button
+                  onClick={() => handleCompleteChallenge(challenge.id)}
+                  disabled={challenge.completed}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200
+                    ${challenge.completed
+                      ? 'bg-emerald-500 text-white cursor-not-allowed opacity-90'
+                      : 'bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600 transform hover:scale-105'
+                    }`}
+                >
+                  {challenge.completed ? 'Completed!' : 'I Did It!'}
+                </button>
+              </div>
+              {lastCompletedChallenge === challenge.id && (
+                  <p className="text-xs text-center text-emerald-600 dark:text-emerald-400 mt-2 animate-fade-in">
+                      Challenge recorded! Points added! 🎉
+                  </p>
+              )}
+            </div>
+            {/* --- Ad Placement: Between Challenges --- */}
+            {index === 1 && ( // Example: place an ad after the second challenge
+              <div className="col-span-full md:col-span-1 lg:col-span-1 p-4 bg-green-100 dark:bg-green-900 border border-green-300 dark:border-green-700 rounded-xl text-center shadow-inner animate-fade-in-up">
+                <p className="text-green-800 dark:text-green-200 font-semibold text-lg">
+                  [Ad Placeholder: Boost your brainpower!]
+                </p>
+                <a href="#" className="text-green-600 dark:text-green-400 hover:underline text-sm">
+                  Discover Brain Games
+                </a>
               </div>
             )}
-            <div className="flex items-center space-x-3 mb-4">
-              <Dices className="w-8 h-8 text-purple-600 dark:text-purple-400" />
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-                {challenge.name}
-              </h3>
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-              {challenge.description}
-            </p>
-            <div className="flex justify-between items-center">
-              <span className="flex items-center text-amber-500 dark:text-amber-400 font-bold">
-                <Gift className="w-4 h-4 mr-1" /> {challenge.points} Points
-              </span>
-              <button
-                onClick={() => handleCompleteChallenge(challenge.id)}
-                disabled={challenge.completed}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200
-                  ${challenge.completed
-                    ? 'bg-emerald-500 text-white cursor-not-allowed opacity-90'
-                    : 'bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600 transform hover:scale-105'
-                  }`}
-              >
-                {challenge.completed ? 'Completed!' : 'I Did It!'}
-              </button>
-            </div>
-            {lastCompletedChallenge === challenge.id && (
-                <p className="text-xs text-center text-emerald-600 dark:text-emerald-400 mt-2 animate-fade-in">
-                    Challenge recorded! Points added! 🎉
-                </p>
-            )}
-          </div>
+            {/* --- End Ad Placement --- */}
+          </React.Fragment>
         ))}
       </div>
       <style jsx>{`

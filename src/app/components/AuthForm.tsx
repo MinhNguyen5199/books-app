@@ -164,6 +164,13 @@ const AuthForm = ({ type, onSubmit }: AuthFormProps) => {
           </>
         )}
       </p>
+
+      {/* --- Ad Placement: Subtle Footer Ad --- */}
+      <div className="mt-8 text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg text-sm text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600">
+        <p>[Ad: Learn faster with BookWise partners!]</p>
+        <a href="#" className="underline hover:text-indigo-600 dark:hover:text-indigo-400">Visit our sponsors</a>
+      </div>
+      {/* --- End Ad Placement --- */}
     </form>
   );
 };

@@ -212,6 +212,17 @@ const SummaryForm = () => {
               Export Markdown
             </button>
           </div>
+
+          {/* --- Ad Placement: Below Summary Result --- */}
+          <div className="mt-8 p-4 bg-yellow-100 dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-700 rounded-xl text-center shadow-inner">
+            <p className="text-yellow-800 dark:text-yellow-200 font-semibold text-lg">
+              [Ad Placeholder: Get the full book on sale!]
+            </p>
+            <a href="#" className="text-yellow-600 dark:text-yellow-400 hover:underline text-sm">
+              Shop Now
+            </a>
+          </div>
+          {/* --- End Ad Placement --- */}
         </div>
       )}
     </div>

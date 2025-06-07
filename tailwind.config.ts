@@ -2,7 +2,6 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  darkMode: 'class', // Enable dark mode based on the 'dark' class on the HTML element
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,11 +9,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        inter: ['Inter', 'sans-serif'], // Primary font for clean, modern look
-        // You can add other fonts here for headings or special elements, e.g.,
-        // heading: ['Montserrat', 'sans-serif'],
-      },
       colors: {
         // Dark Mode Palette
         gray: {
