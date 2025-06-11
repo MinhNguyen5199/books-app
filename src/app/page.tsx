@@ -42,6 +42,8 @@ const trendingBooks = [
 ];
 
 const HomePage = () => {
+
+  
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-50 font-inter transition-colors duration-300 flex flex-col">
       <Header />
