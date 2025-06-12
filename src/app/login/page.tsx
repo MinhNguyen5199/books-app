@@ -99,14 +99,6 @@ export default function LoginPage() {
           <span className="font-semibold">User ID:</span> {user.uid}
         </p>
 
-        {user.photoURL && (
-          <img
-            src={user.photoURL}
-            alt="Profile"
-            className="w-24 h-24 rounded-full mx-auto mb-4"
-          />
-        )}
-
         <div className="mt-4 p-4 border rounded-md bg-gray-50 text-left">
           <h3 className="text-lg font-semibold mb-2">User Profile from Neon DB (via API Gateway):</h3>
           {apiLoading && <p>Loading profile...</p>}
