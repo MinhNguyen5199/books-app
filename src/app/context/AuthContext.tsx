@@ -56,6 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           // }
 
           const { data } = await response.json();
+          console.log(data)
           setUserProfile(data);
 
         } catch (error) {
