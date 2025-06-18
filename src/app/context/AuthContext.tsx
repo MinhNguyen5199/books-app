@@ -1,11 +1,11 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { User, onAuthStateChanged, signOut } from 'firebase/auth'; // Import signOut
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
+import { User, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../utils/FirebaseInitialize';
 import { useRouter } from 'next/navigation';
 
-// This matches the 'users' table in your database
+// Interface for the User Profile data
 interface UserProfile {
   firebase_uid: string;
   email: string;
@@ -13,12 +13,18 @@ interface UserProfile {
   current_tier: 'basic' | 'pro' | 'vip' | 'student-pro' | 'student-vip';
   is_student: boolean;
   stripe_customer_id?: string;
+  subscription_status?: 'active' | 'trialing' | 'canceled' | 'past_due';
+  subscription_expires_at?: number; // Unix timestamp
+  cancel_at_period_end?: boolean;
+  had_trial?: boolean;
 }
 
+// Interface for the context's value
 interface AuthContextType {
   user: User | null;
   userProfile: UserProfile | null;
   loading: boolean;
+  fetchUserProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,42 +35,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  // 1. DEFINE the fetchUserProfile function here using useCallback
+  const fetchUserProfile = useCallback(async () => {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+        setUserProfile(null);
+        return;
+    }
+
+    try {
+        const token = await currentUser.getIdToken();
+        const response = await fetch('http://localhost:4000/get-user-profile', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (response.status === 403) {
+            await signOut(auth);
+            router.push('/login?error=unverified');
+            return;
+        }
+        if (!response.ok) {
+            throw new Error('Failed to fetch profile');
+        }
+        const { data } = await response.json();
+        setUserProfile(data);
+    } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+        setUserProfile(null);
+    }
+  }, [router]); // Dependency for useCallback
+
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setLoading(true);
       if (currentUser) {
         setUser(currentUser);
-        
-        // Fetch the user's profile from your database via your backend API
-        try {
-          const token = await currentUser.getIdToken();
-          const response = await fetch('http://localhost:4000/get-user-profile', {
-            headers: { 'Authorization': `Bearer ${token}` }
-          });
-
-          // --- NEW: Handle the 403 Forbidden error from the authorizer ---
-          if (response.status === 403) {
-            // This means the email is not verified. Sign the user out and redirect them.
-            await signOut(auth); 
-            router.push('/login?error=unverified');
-            return; // Stop further execution
-          }
-          // --- END NEW ---
-
-          // if (!response.ok) {
-          //   throw new Error(`Failed to fetch profile: ${response.statusText}`);
-          // }
-
-          const { data } = await response.json();
-          console.log(data)
-          setUserProfile(data);
-
-        } catch (error) {
-          console.error("Failed to fetch user profile:", error);
-          setUserProfile(null);
-        }
+        // 2. CALL the reusable function
+        await fetchUserProfile();
       } else {
-        // User is logged out
         setUser(null);
         setUserProfile(null);
       }
@@ -72,10 +79,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     return () => unsubscribe();
-  }, [router]);
+  }, [fetchUserProfile]); // Dependency for useEffect
 
   return (
-    <AuthContext.Provider value={{ user, userProfile, loading }}>
+    // 3. PASS the function in the Provider's value
+    <AuthContext.Provider value={{ user, userProfile, loading, fetchUserProfile }}>
       {children}
     </AuthContext.Provider>
   );
